@@ -42,11 +42,6 @@ export default function Masthead({
             cleanrooms, pilot lines, test beds and launchpads you can actually
             access.
           </span>
-          <div className="counters">
-            <Counter n={shown} l="Shown" />
-            <Counter n={total} l="Facilities" />
-            <Counter n={countries} l="Countries" />
-          </div>
         </div>
         <div className="mast-right">
           <span
@@ -97,6 +92,11 @@ export default function Masthead({
           {activeCount > 0 && <span className="fcount">{activeCount}</span>}
           <span className="caret">▾</span>
         </button>
+        <div className="counters">
+          <Counter n={shown} l="Shown" />
+          <Counter n={total} l="Facilities" />
+          <Counter n={countries} l="Countries" />
+        </div>
       </div>
     </header>
   );

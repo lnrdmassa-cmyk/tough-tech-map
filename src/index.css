@@ -1,26 +1,26 @@
 :root {
   /* European-flag palette */
-  --eu-blue: #003776;
-  --eu-blue-deep: #00264f;
+  --eu-blue: #0c1d34; /* masthead / header band */
+  --eu-blue-deep: #070f1c;
   --eu-gold: #ffcc00;
   --eu-gold-press: #e8b900;
 
-  --bg: #003776; /* EC Blue 110 — negative/dark canvas */
-  --surface: #0b2c61; /* panels / cards */
-  --surface-2: #0a2750; /* inputs / chips */
-  --ink: #eaf0fb;
-  --ink-soft: #adbbd8;
-  --ink-faint: #7d8cb1;
-  --line: #1c407e;
-  --line-strong: #2a5096;
-  --line-blue: #1c407e; /* hairlines on blue */
-  --accent: #5b86ff;
-  --accent-press: #7a9dff;
+  --bg: #0a1626; /* deep graphite-navy instrument canvas */
+  --surface: #13233d; /* panels / cards */
+  --surface-2: #0f1d33; /* inputs / chips */
+  --ink: #eef2fb;
+  --ink-soft: #a9b6cf;
+  --ink-faint: #6f7e9b;
+  --line: #233954;
+  --line-strong: #32496c;
+  --line-blue: #1d3046; /* hairlines on header band */
+  --accent: #4f8cff; /* electric blue */
+  --accent-press: #6ea0ff;
 
-  /* text on the blue canvas */
-  --on-blue: #eaf0fb;
-  --on-blue-soft: #adbbd8;
-  --on-blue-faint: #7d8cb1;
+  /* text on the dark canvas */
+  --on-blue: #eef2fb;
+  --on-blue-soft: #a9b6cf;
+  --on-blue-faint: #6f7e9b;
 
   /* resource-type colors */
   --t-core: #1e3aff;
@@ -144,20 +144,20 @@ a {
 }
 .counters {
   display: flex;
-  gap: 8px;
-  margin-top: 14px;
+  gap: 7px;
+  margin-left: auto;
   flex-wrap: wrap;
 }
 .counter {
   border: 1px solid var(--line-blue);
   background: rgba(255, 255, 255, 0.06);
   border-radius: 8px;
-  padding: 7px 13px;
-  min-width: 70px;
+  padding: 5px 11px;
+  min-width: 54px;
 }
 .counter .n {
   font-family: var(--display);
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1;
   color: #fff;
