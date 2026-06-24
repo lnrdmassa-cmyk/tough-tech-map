@@ -36,7 +36,7 @@ export default function Masthead({
     <header className="masthead">
       <div className="mast-top">
         <div className="brand">
-          <h1>Build Hard Tech in Europe</h1>
+          <h1>Build Deep Tech in Europe</h1>
           <span className="tag">
             The open map of deep-tech infrastructure across Europe — labs,
             cleanrooms, pilot lines, test beds and launchpads you can actually
