@@ -57,6 +57,12 @@ export const COUNTRIES: Record<string, Country> = {
   GB: { name: "United Kingdom", centroid: [53.0, -1.5], flag: "🇬🇧" },
   NL: { name: "Netherlands", centroid: [52.2, 5.3], flag: "🇳🇱" },
   IT: { name: "Italy", centroid: [42.8, 12.5], flag: "🇮🇹" },
+  BE: { name: "Belgium", centroid: [50.6, 4.6], flag: "🇧🇪" },
+  DK: { name: "Denmark", centroid: [56.0, 10.0], flag: "🇩🇰" },
+  PL: { name: "Poland", centroid: [52.0, 19.4], flag: "🇵🇱" },
+  EE: { name: "Estonia", centroid: [58.7, 25.5], flag: "🇪🇪" },
+  LV: { name: "Latvia", centroid: [56.9, 24.6], flag: "🇱🇻" },
+  LT: { name: "Lithuania", centroid: [55.2, 23.9], flag: "🇱🇹" },
 };
 
 export const COUNTRY_CODES: string[] = Object.keys(COUNTRIES);
