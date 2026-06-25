@@ -34,7 +34,7 @@ function createClusterIcon(cluster: { getChildCount: () => number }): L.DivIcon 
   return L.divIcon({
     className: "tt-cluster",
     html: `<b>${cluster.getChildCount()}</b>`,
-    iconSize: [34, 34],
+    iconSize: [40, 40],
   });
 }
 
