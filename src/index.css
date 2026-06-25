@@ -398,6 +398,11 @@ a {
   grid-template-columns: var(--cards-w) 1fr;
 }
 
+/* Mobile-only List/Map switch (hidden on desktop) */
+.mvtoggle {
+  display: none;
+}
+
 /* ---------- Cards (left, on blue) ---------- */
 .cards {
   border-right: 1px solid var(--line-blue);
@@ -1121,6 +1126,45 @@ a {
   }
   .frow {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 940px) {
+  .mvtoggle {
+    display: flex;
+    gap: 5px;
+    padding: 7px 12px;
+    background: var(--eu-blue);
+    border-bottom: 1px solid var(--line-blue);
+    position: sticky;
+    top: 0;
+    z-index: 1100;
+  }
+  .mvtoggle button {
+    flex: 1;
+    border: 1px solid var(--line-strong);
+    background: var(--surface-2);
+    color: var(--ink-soft);
+    font-weight: 600;
+    font-size: 13.5px;
+    padding: 10px;
+    border-radius: 9px;
+    cursor: pointer;
+  }
+  .mvtoggle button.on {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .shell[data-mobile-view="list"] .map-wrap {
+    display: none;
+  }
+  .shell[data-mobile-view="map"] .cards {
+    display: none;
+  }
+  .shell[data-mobile-view="map"] .map-wrap {
+    height: 80vh;
+    min-height: 440px;
   }
 }
 

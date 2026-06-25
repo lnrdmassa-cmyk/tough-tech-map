@@ -24,6 +24,7 @@ export default function App() {
   const [submitting, setSubmitting] = useState(false);
   const [toast, setToast] = useState<ToastMsg>(null);
   const [sizeKey, setSizeKey] = useState(0);
+  const [mobileView, setMobileView] = useState<"list" | "map">("list");
 
   const filtered = useMemo(
     () => applyFilters(facilities, filters),
@@ -54,6 +55,13 @@ export default function App() {
   }, []);
 
   const reset = useCallback(() => setFilters(EMPTY_FILTERS), []);
+
+  // Mobile: switch between the list and the map. When the map becomes visible
+  // again, bump sizeKey so Leaflet re-measures (otherwise tiles render grey).
+  const switchMobileView = useCallback((v: "list" | "map") => {
+    setMobileView(v);
+    if (v === "map") setSizeKey((k) => k + 1);
+  }, []);
 
   // Deep-linking: open a facility from ?f= on first load, and keep the URL in
   // sync with the open facility so any view can be shared or bookmarked.
@@ -147,7 +155,30 @@ export default function App() {
         onReset={reset}
       />
 
-      <div className="shell">
+      <div
+        className="mvtoggle"
+        role="tablist"
+        aria-label="Switch between list and map"
+      >
+        <button
+          role="tab"
+          aria-selected={mobileView === "list"}
+          className={mobileView === "list" ? "on" : ""}
+          onClick={() => switchMobileView("list")}
+        >
+          List
+        </button>
+        <button
+          role="tab"
+          aria-selected={mobileView === "map"}
+          className={mobileView === "map" ? "on" : ""}
+          onClick={() => switchMobileView("map")}
+        >
+          Map
+        </button>
+      </div>
+
+      <div className="shell" data-mobile-view={mobileView}>
         <section className="cards">
           <div className="cards-head">
             <span className="ch-n">
