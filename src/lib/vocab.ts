@@ -63,6 +63,14 @@ export const COUNTRIES: Record<string, Country> = {
   EE: { name: "Estonia", centroid: [58.7, 25.5], flag: "🇪🇪" },
   LV: { name: "Latvia", centroid: [56.9, 24.6], flag: "🇱🇻" },
   LT: { name: "Lithuania", centroid: [55.2, 23.9], flag: "🇱🇹" },
+  IE: { name: "Ireland", centroid: [53.2, -8.0], flag: "🇮🇪" },
+  PT: { name: "Portugal", centroid: [39.6, -8.0], flag: "🇵🇹" },
+  AT: { name: "Austria", centroid: [47.6, 14.1], flag: "🇦🇹" },
+  SE: { name: "Sweden", centroid: [62.0, 15.0], flag: "🇸🇪" },
+  NO: { name: "Norway", centroid: [64.5, 12.0], flag: "🇳🇴" },
+  FI: { name: "Finland", centroid: [64.0, 26.0], flag: "🇫🇮" },
+  CZ: { name: "Czechia", centroid: [49.8, 15.5], flag: "🇨🇿" },
+  ES: { name: "Spain", centroid: [40.2, -3.7], flag: "🇪🇸" },
 };
 
 export const COUNTRY_CODES: string[] = Object.keys(COUNTRIES);
