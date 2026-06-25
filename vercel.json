@@ -2,5 +2,13 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "tough-tech-map.vercel.app" }],
+      "destination": "https://build-deep-tech-europe.vercel.app/:path*",
+      "permanent": true
+    }
+  ]
 }
