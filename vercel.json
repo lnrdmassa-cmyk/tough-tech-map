@@ -5,6 +5,12 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "tough-tech-map.vercel.app" }],
+      "destination": "https://build-deep-tech-europe.vercel.app/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "tough-tech-map.vercel.app" }],
       "destination": "https://build-deep-tech-europe.vercel.app/:path*",
