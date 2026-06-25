@@ -44,16 +44,6 @@ export default function Masthead({
           </span>
         </div>
         <div className="mast-right">
-          <span
-            className={`source-pill ${demoMode ? "" : "live"}`}
-            title={
-              demoMode
-                ? "Running on the bundled seed (no Supabase keys set)"
-                : "Reading approved facilities from Supabase"
-            }
-          >
-            {demoMode ? "Demo data" : "Live · Supabase"}
-          </span>
           <button className="btn-add" onClick={onAdd}>
             + Add a facility
           </button>

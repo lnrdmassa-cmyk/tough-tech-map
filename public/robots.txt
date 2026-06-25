@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://tough-tech-map.vercel.app/sitemap.xml
+Sitemap: https://build-deep-tech-europe.vercel.app/sitemap.xml
