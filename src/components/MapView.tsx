@@ -272,8 +272,8 @@ export default function MapView({
       </div>
 
       <div className="data-note">
-        Built &amp; maintained by Leonardo Massa · directionally accurate —
-        verify access, capabilities &amp; equipment with each facility.{" "}
+        Community-sourced &amp; directionally accurate — verify access,
+        capabilities &amp; equipment with each facility.{" "}
         <a href="/facilities.html" target="_blank" rel="noopener">
           Text directory ↗
         </a>

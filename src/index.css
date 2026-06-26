@@ -120,6 +120,17 @@ a {
   color: var(--on-blue-soft);
   max-width: 640px;
 }
+.brand .byline {
+  font-size: 11px;
+  color: var(--on-blue-faint);
+  width: fit-content;
+  margin-top: 1px;
+  transition: color 0.12s ease;
+}
+.brand .byline:hover {
+  color: var(--eu-gold);
+  text-decoration: underline;
+}
 .mast-right {
   margin-left: auto;
   display: flex;

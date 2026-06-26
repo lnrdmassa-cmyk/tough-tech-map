@@ -42,6 +42,14 @@ export default function Masthead({
             cleanrooms, pilot lines, test beds and launchpads you can actually
             access.
           </span>
+          <a
+            className="byline"
+            href="https://www.linkedin.com/in/leonardomassa/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Created by Leonardo Massa
+          </a>
         </div>
         <div className="mast-right">
           <button className="btn-add" onClick={onAdd}>
