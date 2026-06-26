@@ -58,8 +58,10 @@ export default function App() {
   );
   const activeCount = useMemo(
     () =>
-      [filters.cc, filters.type, filters.cap, filters.access].filter(Boolean)
-        .length,
+      filters.cc.length +
+      filters.type.length +
+      filters.cap.length +
+      filters.access.length,
     [filters],
   );
 
@@ -69,7 +71,13 @@ export default function App() {
   }, []);
 
   const toggle = useCallback((key: FilterKey, val: string) => {
-    setFilters((p) => ({ ...p, [key]: p[key] === val ? null : val }));
+    setFilters((p) => {
+      const cur = p[key];
+      const next = cur.includes(val)
+        ? cur.filter((v) => v !== val)
+        : [...cur, val];
+      return { ...p, [key]: next };
+    });
   }, []);
 
   const search = useCallback((q: string) => {

@@ -1,12 +1,28 @@
 import type { Facility, Filters, FilterKey } from "../types";
 
+/** Lowercase + strip diacritics so "julich" matches "Jülich", "krakow" → "Kraków". */
+function fold(s: string): string {
+  return s
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase();
+}
+
 export function textMatch(f: Facility, q: string): boolean {
-  const needle = q.trim().toLowerCase();
+  const needle = fold(q.trim());
   if (!needle) return true;
-  return [f.name, f.org, f.city, f.blurb, f.equipment]
-    .join(" ")
-    .toLowerCase()
-    .includes(needle);
+  return fold(
+    [
+      f.name,
+      f.org,
+      f.city,
+      f.blurb,
+      f.equipment,
+      f.type,
+      ...f.sectors,
+      ...f.capabilities,
+    ].join(" "),
+  ).includes(needle);
 }
 
 export function fieldMatch(f: Facility, key: FilterKey, val: string): boolean {
@@ -31,11 +47,25 @@ export function passes(
   ignore: FilterKey | null,
 ): boolean {
   if (!textMatch(f, filters.q)) return false;
-  if (ignore !== "cc" && filters.cc && f.cc !== filters.cc) return false;
-  if (ignore !== "type" && filters.type && f.type !== filters.type) return false;
-  if (ignore !== "access" && filters.access && f.access !== filters.access)
+  if (ignore !== "cc" && filters.cc.length && !filters.cc.includes(f.cc))
     return false;
-  if (ignore !== "cap" && filters.cap && !f.capabilities.includes(filters.cap))
+  if (
+    ignore !== "type" &&
+    filters.type.length &&
+    !filters.type.includes(f.type)
+  )
+    return false;
+  if (
+    ignore !== "access" &&
+    filters.access.length &&
+    !filters.access.includes(f.access)
+  )
+    return false;
+  if (
+    ignore !== "cap" &&
+    filters.cap.length &&
+    !filters.cap.some((c) => f.capabilities.includes(c))
+  )
     return false;
   return true;
 }
@@ -63,6 +93,10 @@ export function countForChip(
 
 export function hasActiveFilters(filters: Filters): boolean {
   return Boolean(
-    filters.q || filters.cc || filters.type || filters.cap || filters.access,
+    filters.q ||
+      filters.cc.length ||
+      filters.type.length ||
+      filters.cap.length ||
+      filters.access.length,
   );
 }

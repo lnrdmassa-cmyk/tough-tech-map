@@ -21,18 +21,18 @@ export type FilterKey = "cc" | "type" | "cap" | "access";
 
 export type Filters = {
   q: string;
-  cc: string | null;
-  type: string | null;
-  cap: string | null;
-  access: string | null;
+  cc: string[];
+  type: string[];
+  cap: string[];
+  access: string[];
 };
 
 export const EMPTY_FILTERS: Filters = {
   q: "",
-  cc: null,
-  type: null,
-  cap: null,
-  access: null,
+  cc: [],
+  type: [],
+  cap: [],
+  access: [],
 };
 
 /** A public submission — no id (server-generated) and always lands as pending. */

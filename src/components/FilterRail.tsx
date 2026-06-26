@@ -39,7 +39,7 @@ function Chip({
   filters: Filters;
   onToggle: (key: FilterKey, val: string) => void;
 }) {
-  const active = filters[k] === val;
+  const active = filters[k].includes(val);
   const count = countForChip(facilities, filters, k, val);
   const cls = [
     "chip",
