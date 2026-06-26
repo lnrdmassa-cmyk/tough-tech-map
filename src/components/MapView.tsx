@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import L from "leaflet";
@@ -26,6 +26,11 @@ const EUROPE_BOUNDS: [[number, number], [number, number]] = [
   [72, 34],
 ];
 
+// At/above this zoom, stop clustering and show each facility as its own
+// type-coloured square (with the legend). Below it, everything — including
+// lone facilities — is drawn as a density bubble.
+const SQUARE_ZOOM = 8;
+
 /** Small square divIcon coloured by resource type, with a thin white border. */
 function markerIcon(type: string, fid: string): L.DivIcon {
   const color = TYPE_COLORS[type] ?? "#101a24";
@@ -50,6 +55,7 @@ function MapBridge({
   flyTo,
   sizeKey,
   onBoundsChange,
+  onZoom,
 }: {
   flyTo: FlyTarget;
   sizeKey: number;
@@ -59,6 +65,7 @@ function MapBridge({
     minLng: number;
     maxLng: number;
   }) => void;
+  onZoom?: (zoom: number) => void;
 }) {
   const map = useMap();
 
@@ -80,6 +87,18 @@ function MapBridge({
       map.off("moveend", emit);
     };
   }, [map, onBoundsChange]);
+
+  // Report the zoom level up so the markers can switch between density bubbles
+  // (zoomed out) and individual type-squares (zoomed in).
+  useEffect(() => {
+    if (!onZoom) return;
+    const emit = () => onZoom(map.getZoom());
+    emit();
+    map.on("zoomend", emit);
+    return () => {
+      map.off("zoomend", emit);
+    };
+  }, [map, onZoom]);
 
   useEffect(() => {
     if (!flyTo) return;
@@ -135,6 +154,10 @@ export default function MapView({
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
 
+  // Below SQUARE_ZOOM we cluster (lone points become "1" bubbles); at/above it
+  // every facility is drawn as its own type-coloured square.
+  const [zoomedIn, setZoomedIn] = useState(false);
+
   const markers = useMemo(
     () =>
       facilities.map((f) => (
@@ -180,20 +203,24 @@ export default function MapView({
           maxZoom={19}
           attribution={CARTO_ATTRIBUTION}
         />
-        <MarkerClusterGroup
-          iconCreateFunction={createClusterIcon}
-          maxClusterRadius={46}
-          showCoverageOnHover={false}
-          singleMarkerMode
-          disableClusteringAtZoom={8}
-          chunkedLoading
-        >
-          {markers}
-        </MarkerClusterGroup>
+        {zoomedIn ? (
+          markers
+        ) : (
+          <MarkerClusterGroup
+            iconCreateFunction={createClusterIcon}
+            maxClusterRadius={46}
+            showCoverageOnHover={false}
+            singleMarkerMode
+            chunkedLoading
+          >
+            {markers}
+          </MarkerClusterGroup>
+        )}
         <MapBridge
           flyTo={flyTo}
           sizeKey={sizeKey}
           onBoundsChange={onBoundsChange}
+          onZoom={(z) => setZoomedIn(z >= SQUARE_ZOOM)}
         />
       </MapContainer>
 
@@ -210,8 +237,8 @@ export default function MapView({
       </div>
 
       <div className="data-note">
-        Community-maintained &amp; directionally accurate — verify access,
-        capabilities &amp; equipment with each facility.{" "}
+        Built &amp; maintained by Leonardo Massa · directionally accurate —
+        verify access, capabilities &amp; equipment with each facility.{" "}
         <a href="/facilities.html" target="_blank" rel="noopener">
           Text directory ↗
         </a>
