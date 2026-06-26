@@ -13,6 +13,7 @@ export type Facility = {
   equipment: string;
   blurb: string;
   website: string;
+  email?: string;
   status?: "approved" | "pending";
 };
 

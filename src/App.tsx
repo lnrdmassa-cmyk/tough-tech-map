@@ -12,6 +12,8 @@ import { EMPTY_FILTERS } from "./types";
 import type { Facility, FilterKey, Filters, NewFacility } from "./types";
 import { submitFacility } from "./lib/supabase";
 
+type Bounds = { minLat: number; maxLat: number; minLng: number; maxLng: number };
+
 export default function App() {
   const { facilities, loading, demoMode } = useFacilities();
 
@@ -25,11 +27,31 @@ export default function App() {
   const [toast, setToast] = useState<ToastMsg>(null);
   const [sizeKey, setSizeKey] = useState(0);
   const [mobileView, setMobileView] = useState<"list" | "map">("list");
+  const [bounds, setBounds] = useState<Bounds | null>(null);
 
   const filtered = useMemo(
     () => applyFilters(facilities, filters),
     [facilities, filters],
   );
+  // The list shows only facilities inside the current map viewport, so the
+  // list and map stay in sync live as you pan and zoom.
+  const visible = useMemo(() => {
+    if (!bounds) return filtered;
+    // Ignore degenerate bounds (e.g. the map hidden on mobile list view) and
+    // just show the full filtered set.
+    if (
+      bounds.maxLat - bounds.minLat < 0.01 ||
+      bounds.maxLng - bounds.minLng < 0.01
+    )
+      return filtered;
+    return filtered.filter(
+      (f) =>
+        f.lat >= bounds.minLat &&
+        f.lat <= bounds.maxLat &&
+        f.lng >= bounds.minLng &&
+        f.lng <= bounds.maxLng,
+    );
+  }, [filtered, bounds]);
   const countries = useMemo(
     () => new Set(filtered.map((f) => f.cc)).size,
     [filtered],
@@ -135,7 +157,7 @@ export default function App() {
   return (
     <div className="app">
       <Masthead
-        shown={filtered.length}
+        shown={visible.length}
         total={facilities.length}
         countries={countries}
         demoMode={demoMode}
@@ -182,19 +204,23 @@ export default function App() {
         <section className="cards">
           <div className="cards-head">
             <span className="ch-n">
-              {filtered.length}{" "}
-              {filtered.length === 1 ? "facility" : "facilities"}
+              {visible.length}{" "}
+              {visible.length === 1 ? "facility" : "facilities"} in view
             </span>
             <span className="eyebrow">spec sheets</span>
           </div>
-          {filtered.length === 0 ? (
+          {visible.length === 0 ? (
             <div className="empty">
-              No facilities match these filters.
+              {filtered.length === 0
+                ? "No facilities match these filters."
+                : "No facilities in this map area."}
               <br />
-              Try removing one.
+              {filtered.length === 0
+                ? "Try removing one."
+                : "Pan or zoom out to see more."}
             </div>
           ) : (
-            filtered.map((f) => (
+            visible.map((f) => (
               <ResultCard
                 key={f.id}
                 f={f}
@@ -212,6 +238,7 @@ export default function App() {
           flyTo={flyTo}
           sizeKey={sizeKey}
           onSelect={select}
+          onBoundsChange={setBounds}
         />
       </div>
 

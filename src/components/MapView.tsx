@@ -39,8 +39,40 @@ function createClusterIcon(cluster: { getChildCount: () => number }): L.DivIcon 
 }
 
 /** Lives inside MapContainer so it can drive the Leaflet map imperatively. */
-function MapBridge({ flyTo, sizeKey }: { flyTo: FlyTarget; sizeKey: number }) {
+function MapBridge({
+  flyTo,
+  sizeKey,
+  onBoundsChange,
+}: {
+  flyTo: FlyTarget;
+  sizeKey: number;
+  onBoundsChange?: (b: {
+    minLat: number;
+    maxLat: number;
+    minLng: number;
+    maxLng: number;
+  }) => void;
+}) {
   const map = useMap();
+
+  // Report the visible map bounds up so the list stays in sync, live.
+  useEffect(() => {
+    if (!onBoundsChange) return;
+    const emit = () => {
+      const b = map.getBounds();
+      onBoundsChange({
+        minLat: b.getSouth(),
+        maxLat: b.getNorth(),
+        minLng: b.getWest(),
+        maxLng: b.getEast(),
+      });
+    };
+    emit();
+    map.on("moveend", emit);
+    return () => {
+      map.off("moveend", emit);
+    };
+  }, [map, onBoundsChange]);
 
   useEffect(() => {
     if (!flyTo) return;
@@ -74,6 +106,12 @@ type Props = {
   flyTo: FlyTarget;
   sizeKey: number;
   onSelect: (f: Facility) => void;
+  onBoundsChange?: (b: {
+    minLat: number;
+    maxLat: number;
+    minLng: number;
+    maxLng: number;
+  }) => void;
 };
 
 export default function MapView({
@@ -83,6 +121,7 @@ export default function MapView({
   flyTo,
   sizeKey,
   onSelect,
+  onBoundsChange,
 }: Props) {
   // Keep onSelect out of the markers memo so hover/state changes never rebuild
   // the cluster layer.
@@ -140,7 +179,11 @@ export default function MapView({
         >
           {markers}
         </MarkerClusterGroup>
-        <MapBridge flyTo={flyTo} sizeKey={sizeKey} />
+        <MapBridge
+          flyTo={flyTo}
+          sizeKey={sizeKey}
+          onBoundsChange={onBoundsChange}
+        />
       </MapContainer>
 
       <div className="legend">

@@ -79,11 +79,13 @@ export default function DetailDrawer({ facility, onClose }: Props) {
               </Spec>
               {f.equipment && <Spec k="Equipment">{f.equipment}</Spec>}
               {f.blurb && <Spec k="About">{f.blurb}</Spec>}
-              <Spec k="Coordinates">
-                <span className="mono">
-                  {f.lat.toFixed(4)}, {f.lng.toFixed(4)}
-                </span>
-              </Spec>
+              {f.email && (
+                <Spec k="Contact">
+                  <a href={`mailto:${f.email}?subject=Collaboration%20enquiry`}>
+                    {f.email}
+                  </a>
+                </Spec>
+              )}
               {f.website && (
                 <a
                   className="dvisit"

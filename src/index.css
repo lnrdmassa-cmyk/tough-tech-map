@@ -624,8 +624,10 @@ a {
   width: 14px;
   height: 14px;
   border-radius: 3px;
-  border: 2px solid #fff;
-  box-shadow: 0 1px 3px rgba(16, 26, 36, 0.35);
+  border: none;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.35),
+    0 1px 3px rgba(16, 26, 36, 0.6);
   transition: transform 0.12s ease;
 }
 .tt-marker i.hot {
