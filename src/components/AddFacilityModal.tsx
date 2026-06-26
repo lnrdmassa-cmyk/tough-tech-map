@@ -109,6 +109,7 @@ export default function AddFacilityModal({
       equipment: get("equipment"),
       blurb: get("blurb"),
       website: get("website"),
+      email: get("email"),
     };
     onSubmit(rec);
   }
@@ -260,6 +261,15 @@ export default function AddFacilityModal({
               <label>Website</label>
               <input name="website" placeholder="example.org" />
             </div>
+            <div className="field">
+              <label>
+                Contact email <span className="hint">(optional)</span>
+              </label>
+              <input name="email" type="email" placeholder="info@example.org" />
+            </div>
+          </div>
+
+          <div className="frow">
             <div className="field">
               <label>
                 Coordinates <span className="hint">(optional)</span>

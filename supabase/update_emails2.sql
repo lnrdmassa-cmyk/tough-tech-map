@@ -1,0 +1,44 @@
+-- Round 2 of contact emails: 40 more facilities.
+
+alter table public.facilities add column if not exists email text not null default '';
+
+update public.facilities set email='useroffice@psi.ch' where id='CH-003';
+update public.facilities set email='accueil@c2n.upsaclay.fr' where id='FR-002';
+update public.facilities set email='contact@ipvf.fr' where id='FR-008';
+update public.facilities set email='Gaetan.Piret@esa.int' where id='NL-001';
+update public.facilities set email='info@tno.nl' where id='NL-008';
+update public.facilities set email='hello@wilbe.com' where id='GB-049';
+update public.facilities set email='info@cp.catapult.org.uk' where id='GB-066';
+update public.facilities set email='segreteria.generale@fbk.eu' where id='IT-003';
+update public.facilities set email='segreteria@tecnopolodabruzzo.it' where id='IT-006';
+update public.facilities set email='bioupper@cariplofactory.it' where id='IT-008';
+update public.facilities set email='ulrike.wunderwald@iisb.fraunhofer.de' where id='DE-010';
+update public.facilities set email='susanne.krause@ipt.fraunhofer.de' where id='DE-019';
+update public.facilities set email='info@ikts.fraunhofer.de' where id='DE-021';
+update public.facilities set email='info@ise.fraunhofer.de' where id='DE-024';
+update public.facilities set email='info@izi.fraunhofer.de' where id='DE-025';
+update public.facilities set email='info@multitel.be' where id='BE-011';
+update public.facilities set email='projects@materialise.be' where id='BE-016';
+update public.facilities set email='jmn@space.dtu.dk' where id='DK-004';
+update public.facilities set email='leitung@lrz.de' where id='DE-032';
+update public.facilities set email='isabel.garcia-cortes@ciemat.es' where id='ES-001';
+update public.facilities set email='communication@laas.fr' where id='FR-011';
+update public.facilities set email='stephane.beaussart@iemn.fr' where id='FR-013';
+update public.facilities set email='communication@ill.eu' where id='FR-017';
+update public.facilities set email='acces@genci.fr' where id='FR-019';
+update public.facilities set email='jean-noel.patillon@cea.fr' where id='FR-020';
+update public.facilities set email='communication@institutoptique.fr' where id='FR-024';
+update public.facilities set email='zernike@rug.nl' where id='NL-014';
+update public.facilities set email='denise.carthy@tcd.ie' where id='IE-003';
+update public.facilities set email='jamie.guidera@ul.ie' where id='IE-006';
+update public.facilities set email='peter.modh@chalmers.se' where id='SE-004';
+update public.facilities set email='duncan.platt@ri.se' where id='SE-008';
+update public.facilities set email='info@cicbiomagune.es' where id='ES-007';
+update public.facilities set email='info@tecnalia.com' where id='ES-009';
+update public.facilities set email='stefan.linge@vtt.fi' where id='FI-003';
+update public.facilities set email='mika.harkonen@vtt.fi' where id='FI-004';
+update public.facilities set email='juho.paavola@vtt.fi' where id='FI-005';
+update public.facilities set email='paulinge.dahl@sintef.no' where id='NO-006';
+update public.facilities set email='ocean@sintef.no' where id='NO-008';
+update public.facilities set email='Ingeborg.Roe@sintef.no' where id='NO-009';
+update public.facilities set email='fejfar@fzu.cz' where id='CZ-003';
