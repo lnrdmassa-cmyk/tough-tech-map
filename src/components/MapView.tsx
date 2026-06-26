@@ -19,6 +19,13 @@ const REDUCE =
 
 export type FlyTarget = { lat: number; lng: number; nonce: number } | null;
 
+// Lock the map to the European data extent (Azores in the west, Andøya in the
+// north) so it can't be panned or zoomed out to the whole world.
+const EUROPE_BOUNDS: [[number, number], [number, number]] = [
+  [34, -28],
+  [72, 34],
+];
+
 /** Small square divIcon coloured by resource type, with a thin white border. */
 function markerIcon(type: string, fid: string): L.DivIcon {
   const color = TYPE_COLORS[type] ?? "#101a24";
@@ -161,7 +168,9 @@ export default function MapView({
       <MapContainer
         center={MAP_CENTER}
         zoom={MAP_ZOOM}
-        minZoom={3}
+        minZoom={4}
+        maxBounds={EUROPE_BOUNDS}
+        maxBoundsViscosity={1}
         scrollWheelZoom
         className="ttm-map"
       >
@@ -175,6 +184,8 @@ export default function MapView({
           iconCreateFunction={createClusterIcon}
           maxClusterRadius={46}
           showCoverageOnHover={false}
+          singleMarkerMode
+          disableClusteringAtZoom={8}
           chunkedLoading
         >
           {markers}
