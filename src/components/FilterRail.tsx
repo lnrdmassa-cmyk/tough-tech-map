@@ -5,6 +5,7 @@ import {
   COUNTRIES,
   TYPES,
   TYPE_COLORS,
+  CAPABILITIES,
   ACCESS_MODELS,
   SECTORS,
 } from "../lib/vocab";
@@ -119,6 +120,7 @@ export default function FilterRail({
     label: a,
   }));
   const sectorOptions: Option[] = SECTORS.map((s) => ({ val: s, label: s }));
+  const capOptions: Option[] = CAPABILITIES.map((c) => ({ val: c, label: c }));
 
   return (
     <div
@@ -129,17 +131,9 @@ export default function FilterRail({
     >
       <div className="filter-inner">
         <ChipGroup
-          title="Country"
-          k="cc"
-          options={ccOptions}
-          facilities={facilities}
-          filters={filters}
-          onToggle={onToggle}
-        />
-        <ChipGroup
-          title="Resource type"
-          k="type"
-          options={typeOptions}
+          title="Labs"
+          k="cap"
+          options={capOptions}
           facilities={facilities}
           filters={filters}
           onToggle={onToggle}
@@ -156,6 +150,22 @@ export default function FilterRail({
           title="Access model"
           k="access"
           options={accessOptions}
+          facilities={facilities}
+          filters={filters}
+          onToggle={onToggle}
+        />
+        <ChipGroup
+          title="Country"
+          k="cc"
+          options={ccOptions}
+          facilities={facilities}
+          filters={filters}
+          onToggle={onToggle}
+        />
+        <ChipGroup
+          title="Resource type"
+          k="type"
+          options={typeOptions}
           facilities={facilities}
           filters={filters}
           onToggle={onToggle}
