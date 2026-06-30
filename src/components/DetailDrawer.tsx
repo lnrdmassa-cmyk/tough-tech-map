@@ -5,6 +5,7 @@ import { TYPE_COLORS, flagFor, isKeyCapability, websiteUrl } from "../lib/vocab"
 type Props = {
   facility: Facility | null;
   onClose: () => void;
+  onRequestUpdate: (f: Facility) => void;
 };
 
 function Spec({ k, children }: { k: string; children: ReactNode }) {
@@ -16,7 +17,11 @@ function Spec({ k, children }: { k: string; children: ReactNode }) {
   );
 }
 
-export default function DetailDrawer({ facility, onClose }: Props) {
+export default function DetailDrawer({
+  facility,
+  onClose,
+  onRequestUpdate,
+}: Props) {
   const open = Boolean(facility);
   // Keep the last facility visible during the slide-out transition.
   const [shown, setShown] = useState<Facility | null>(facility);
@@ -78,6 +83,15 @@ export default function DetailDrawer({ facility, onClose }: Props) {
                 ))}
               </Spec>
               {f.equipment && <Spec k="Equipment">{f.equipment}</Spec>}
+              {f.updated_at && (
+                <Spec k="Last updated">
+                  {new Date(f.updated_at).toLocaleDateString(undefined, {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </Spec>
+              )}
               {f.blurb && <Spec k="About">{f.blurb}</Spec>}
               {f.email && (
                 <Spec k="Contact">
@@ -106,6 +120,9 @@ export default function DetailDrawer({ facility, onClose }: Props) {
                 }}
               >
                 {copied ? "Link copied ✓" : "Copy link to this facility"}
+              </button>
+              <button className="dcopy" onClick={() => onRequestUpdate(f)}>
+                Suggest an update
               </button>
             </div>
           </>

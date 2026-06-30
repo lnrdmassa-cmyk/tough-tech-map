@@ -5,12 +5,13 @@ import MapView, { type FlyTarget } from "./components/MapView";
 import ResultCard from "./components/ResultCard";
 import DetailDrawer from "./components/DetailDrawer";
 import AddFacilityModal from "./components/AddFacilityModal";
+import RequestUpdatesModal from "./components/RequestUpdatesModal";
 import Toast, { type ToastMsg } from "./components/Toast";
 import { useFacilities } from "./hooks/useFacilities";
 import { applyFilters } from "./lib/filter";
 import { EMPTY_FILTERS } from "./types";
 import type { Facility, FilterKey, Filters, NewFacility } from "./types";
-import { submitFacility } from "./lib/supabase";
+import { submitFacility, submitEdit } from "./lib/supabase";
 
 type Bounds = { minLat: number; maxLat: number; minLng: number; maxLng: number };
 
@@ -24,6 +25,8 @@ export default function App() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [editFacility, setEditFacility] = useState<Facility | null>(null);
+  const [editing, setEditing] = useState(false);
   const [toast, setToast] = useState<ToastMsg>(null);
   const [sizeKey, setSizeKey] = useState(0);
   const [mobileView, setMobileView] = useState<"list" | "map">("list");
@@ -163,6 +166,37 @@ export default function App() {
     [demoMode],
   );
 
+  const handleEditSubmit = useCallback(
+    async (message: string, email: string) => {
+      const target = editFacility;
+      if (!target) return;
+      if (demoMode) {
+        setEditFacility(null);
+        setToast({ msg: "Thanks — sent for review.", kind: "ok" });
+        return;
+      }
+      try {
+        setEditing(true);
+        await submitEdit(target.id, message, email);
+        setEditFacility(null);
+        setToast({
+          msg: "Thanks — your update was sent for review.",
+          kind: "ok",
+        });
+      } catch (e) {
+        setToast({
+          msg:
+            "Could not send: " +
+            (e instanceof Error ? e.message : "unknown error"),
+          kind: "err",
+        });
+      } finally {
+        setEditing(false);
+      }
+    },
+    [editFacility, demoMode],
+  );
+
   return (
     <div className="app">
       <Masthead
@@ -251,13 +285,24 @@ export default function App() {
         />
       </div>
 
-      <DetailDrawer facility={selected} onClose={() => setSelected(null)} />
+      <DetailDrawer
+        facility={selected}
+        onClose={() => setSelected(null)}
+        onRequestUpdate={(f) => setEditFacility(f)}
+      />
       <AddFacilityModal
         open={modalOpen}
         demoMode={demoMode}
         submitting={submitting}
         onClose={() => setModalOpen(false)}
         onSubmit={handleSubmit}
+      />
+      <RequestUpdatesModal
+        key={editFacility?.id ?? "none"}
+        facility={editFacility}
+        submitting={editing}
+        onClose={() => setEditFacility(null)}
+        onSubmit={handleEditSubmit}
       />
       <Toast toast={toast} onDone={() => setToast(null)} />
     </div>

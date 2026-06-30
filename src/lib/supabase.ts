@@ -34,3 +34,25 @@ export async function submitFacility(rec: NewFacility): Promise<void> {
     .insert([{ ...rec, status: "pending", submitted_by: null }]);
   if (error) throw error;
 }
+
+/**
+ * Suggest an update to an existing facility (new equipment, changed access,
+ * better contact). Lands in `facility_edits` as `pending` for review; the
+ * public cannot read the queue.
+ */
+export async function submitEdit(
+  facilityId: string,
+  message: string,
+  contactEmail: string,
+): Promise<void> {
+  if (!supabase) throw new Error("Supabase is not configured");
+  const { error } = await supabase.from("facility_edits").insert([
+    {
+      facility_id: facilityId,
+      message,
+      contact_email: contactEmail || null,
+      status: "pending",
+    },
+  ]);
+  if (error) throw error;
+}

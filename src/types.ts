@@ -14,6 +14,7 @@ export type Facility = {
   blurb: string;
   website: string;
   email?: string;
+  updated_at?: string;
   status?: "approved" | "pending";
 };
 
