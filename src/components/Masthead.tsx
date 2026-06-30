@@ -1,3 +1,6 @@
+import type { Facility, Filters, FilterKey } from "../types";
+import LabsDropdown from "./LabsDropdown";
+
 type Props = {
   shown: number;
   total: number;
@@ -9,6 +12,9 @@ type Props = {
   onSearch: (q: string) => void;
   onToggleFilters: () => void;
   onAdd: () => void;
+  facilities: Facility[];
+  filters: Filters;
+  onToggle: (key: FilterKey, val: string) => void;
 };
 
 function Counter({ n, l }: { n: number; l: string }) {
@@ -31,6 +37,9 @@ export default function Masthead({
   onSearch,
   onToggleFilters,
   onAdd,
+  facilities,
+  filters,
+  onToggle,
 }: Props) {
   return (
     <header className="masthead">
@@ -90,6 +99,11 @@ export default function Masthead({
           {activeCount > 0 && <span className="fcount">{activeCount}</span>}
           <span className="caret">▾</span>
         </button>
+        <LabsDropdown
+          facilities={facilities}
+          filters={filters}
+          onToggle={onToggle}
+        />
         <div className="counters">
           <Counter n={shown} l="Shown" />
           <Counter n={total} l="Facilities" />

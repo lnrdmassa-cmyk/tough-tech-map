@@ -268,6 +268,32 @@ a {
   padding: 1px 7px;
   line-height: 1.5;
 }
+
+/* "Labs" dropdown (capabilities) next to Filters */
+.labs-dd {
+  position: relative;
+}
+.labs-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 1300;
+  min-width: 240px;
+  max-height: 60vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 14px 34px rgba(0, 6, 20, 0.55);
+}
+.labs-menu .chip {
+  justify-content: space-between;
+  width: 100%;
+}
 .btn-filters .caret {
   transition: transform 0.15s ease;
   font-size: 10px;

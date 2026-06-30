@@ -5,8 +5,6 @@ import {
   COUNTRIES,
   TYPES,
   TYPE_COLORS,
-  CAPABILITIES,
-  KEY_CAPABILITIES,
   ACCESS_MODELS,
   SECTORS,
 } from "../lib/vocab";
@@ -122,10 +120,6 @@ export default function FilterRail({
   }));
   const sectorOptions: Option[] = SECTORS.map((s) => ({ val: s, label: s }));
 
-  // Optimized capabilities: the four highlighted (key) ones first, then the rest.
-  const keyCaps = CAPABILITIES.filter((c) => KEY_CAPABILITIES.has(c));
-  const otherCaps = CAPABILITIES.filter((c) => !KEY_CAPABILITIES.has(c));
-
   return (
     <div
       className={`filter-panel ${open ? "open" : ""}`}
@@ -166,40 +160,6 @@ export default function FilterRail({
           filters={filters}
           onToggle={onToggle}
         />
-
-        <div className="group cap-group">
-          <div className="ghead">
-            <span className="gh-l">Capability</span>
-            <span className="gh-hint">core capabilities highlighted</span>
-          </div>
-          <div className="cap-key-row">
-            {keyCaps.map((c) => (
-              <Chip
-                key={c}
-                k="cap"
-                val={c}
-                label={c}
-                isKey
-                facilities={facilities}
-                filters={filters}
-                onToggle={onToggle}
-              />
-            ))}
-          </div>
-          <div className="chips cap-chips">
-            {otherCaps.map((c) => (
-              <Chip
-                key={c}
-                k="cap"
-                val={c}
-                label={c}
-                facilities={facilities}
-                filters={filters}
-                onToggle={onToggle}
-              />
-            ))}
-          </div>
-        </div>
 
         {hasActiveFilters(filters) && (
           <button className="btn-reset" onClick={onReset}>

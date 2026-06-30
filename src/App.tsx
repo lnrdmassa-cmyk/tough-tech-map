@@ -63,7 +63,6 @@ export default function App() {
     () =>
       filters.cc.length +
       filters.type.length +
-      filters.cap.length +
       filters.access.length +
       filters.sector.length,
     [filters],
@@ -210,6 +209,9 @@ export default function App() {
         onSearch={search}
         onToggleFilters={toggleFilters}
         onAdd={() => setModalOpen(true)}
+        facilities={facilities}
+        filters={filters}
+        onToggle={toggle}
       />
 
       <FilterRail
