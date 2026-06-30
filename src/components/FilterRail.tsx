@@ -131,7 +131,7 @@ export default function FilterRail({
     >
       <div className="filter-inner">
         <ChipGroup
-          title="Labs"
+          title="Facility"
           k="cap"
           options={capOptions}
           facilities={facilities}
