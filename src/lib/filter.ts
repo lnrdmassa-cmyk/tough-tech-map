@@ -35,6 +35,8 @@ export function fieldMatch(f: Facility, key: FilterKey, val: string): boolean {
       return f.access === val;
     case "cap":
       return f.capabilities.includes(val);
+    case "sector":
+      return f.sectors.includes(val);
     default:
       return true;
   }
@@ -67,6 +69,12 @@ export function passes(
     !filters.cap.some((c) => f.capabilities.includes(c))
   )
     return false;
+  if (
+    ignore !== "sector" &&
+    filters.sector.length &&
+    !filters.sector.some((s) => f.sectors.includes(s))
+  )
+    return false;
   return true;
 }
 
@@ -97,6 +105,7 @@ export function hasActiveFilters(filters: Filters): boolean {
       filters.cc.length ||
       filters.type.length ||
       filters.cap.length ||
-      filters.access.length,
+      filters.access.length ||
+      filters.sector.length,
   );
 }

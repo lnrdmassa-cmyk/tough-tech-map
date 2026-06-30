@@ -17,7 +17,7 @@ export type Facility = {
   status?: "approved" | "pending";
 };
 
-export type FilterKey = "cc" | "type" | "cap" | "access";
+export type FilterKey = "cc" | "type" | "cap" | "access" | "sector";
 
 export type Filters = {
   q: string;
@@ -25,6 +25,7 @@ export type Filters = {
   type: string[];
   cap: string[];
   access: string[];
+  sector: string[];
 };
 
 export const EMPTY_FILTERS: Filters = {
@@ -33,6 +34,7 @@ export const EMPTY_FILTERS: Filters = {
   type: [],
   cap: [],
   access: [],
+  sector: [],
 };
 
 /** A public submission — no id (server-generated) and always lands as pending. */

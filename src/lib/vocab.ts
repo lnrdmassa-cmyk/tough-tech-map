@@ -37,15 +37,24 @@ export const ACCESS_MODELS: string[] = [
   "Collaboration / contract R&D",
 ];
 
+// Industrial verticals — aligned to The Engine's Tough Tech Map taxonomy,
+// adapted for Europe. Used as the "Vertical" filter facet.
 export const SECTORS: string[] = [
+  "Applied AI & ML",
+  "Robotics & Autonomous Systems",
+  "Biotech & Life Sciences",
   "Semiconductors & Photonics",
   "Quantum",
-  "Life Sciences & Biotech",
+  "Computing & HPC",
+  "Energy",
+  "Climate & Carbon Capture",
   "Advanced Materials",
-  "Energy & Climate",
-  "Space & Aerospace",
   "Advanced Manufacturing",
-  "Robotics & Automation",
+  "Mobility",
+  "Space",
+  "Agrifood",
+  "Defense & Security",
+  "Cross-sector",
 ];
 
 export type Country = { name: string; centroid: [number, number]; flag: string };

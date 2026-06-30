@@ -61,7 +61,8 @@ export default function App() {
       filters.cc.length +
       filters.type.length +
       filters.cap.length +
-      filters.access.length,
+      filters.access.length +
+      filters.sector.length,
     [filters],
   );
 

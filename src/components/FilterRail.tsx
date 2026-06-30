@@ -8,6 +8,7 @@ import {
   CAPABILITIES,
   KEY_CAPABILITIES,
   ACCESS_MODELS,
+  SECTORS,
 } from "../lib/vocab";
 
 type Option = { val: string; label: string; dot?: string };
@@ -119,6 +120,7 @@ export default function FilterRail({
     val: a,
     label: a,
   }));
+  const sectorOptions: Option[] = SECTORS.map((s) => ({ val: s, label: s }));
 
   // Optimized capabilities: the four highlighted (key) ones first, then the rest.
   const keyCaps = CAPABILITIES.filter((c) => KEY_CAPABILITIES.has(c));
@@ -144,6 +146,14 @@ export default function FilterRail({
           title="Resource type"
           k="type"
           options={typeOptions}
+          facilities={facilities}
+          filters={filters}
+          onToggle={onToggle}
+        />
+        <ChipGroup
+          title="Industrial vertical"
+          k="sector"
+          options={sectorOptions}
           facilities={facilities}
           filters={filters}
           onToggle={onToggle}
